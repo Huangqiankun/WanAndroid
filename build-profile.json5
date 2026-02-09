@@ -1,0 +1,76 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\Administrator\\.ohos\\config\\default_WanAndroid_OS4rG3IIUXXf3VBn9IS2JDCfYnPyoPGakzC6IXSnizg=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001A21345E7608ECB595BD8B2AFD882F7A47CC84970D9694C266B61B2C9C7AA122F12819F3236E4F",
+          "profile": "C:\\Users\\Administrator\\.ohos\\config\\default_WanAndroid_OS4rG3IIUXXf3VBn9IS2JDCfYnPyoPGakzC6IXSnizg=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\Administrator\\.ohos\\config\\default_WanAndroid_OS4rG3IIUXXf3VBn9IS2JDCfYnPyoPGakzC6IXSnizg=.p12",
+          "storePassword": "0000001A5F7AD6A002411EBAC08D3A12FBD796E665F6B991F87836CA55272882EC9374B6D44BADF4C4C6"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "6.0.1(21)",
+        "compatibleSdkVersion": "6.0.1(21)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "phone",
+      "srcPath": "./product/phone",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "common",
+      "srcPath": "./base/common",
+    },
+    {
+      "name": "home",
+      "srcPath": "./feature/home",
+    },
+    {
+      "name": "user",
+      "srcPath": "./feature/user",
+    },
+    {
+      "name": "course",
+      "srcPath": "./feature/course",
+    },
+    {
+      "name": "square",
+      "srcPath": "./feature/square",
+    }
+  ]
+}

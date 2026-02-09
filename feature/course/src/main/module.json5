@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "course",
+    "type": "har",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}

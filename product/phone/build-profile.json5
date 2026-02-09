@@ -1,0 +1,44 @@
+{
+  "apiType": "stageMode",
+  "buildOption": {
+    "resOptions": {
+      "copyCodeResource": {
+        "enable": false
+      }
+    }
+  },
+  "buildOptionSet": [
+    {
+      "name": "release",
+      "arkOptions": {
+        "obfuscation": {
+          "ruleOptions": {
+            "enable": false,
+            "files": [
+              "./obfuscation-rules.txt"
+            ]
+          }
+        },
+        "buildProfileFields": {
+          "BASE_URL": "https://www.wanandroid.com/"
+        }
+      }
+    },
+    {
+      "name": "debug",
+      "arkOptions": {
+        "buildProfileFields": {
+          "BASE_URL": "https://www.wanandroid.com/"
+        }
+      }
+    }
+  ],
+  "targets": [
+    {
+      "name": "default"
+    },
+    {
+      "name": "ohosTest",
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "phone",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "common": "file:../../base/common",
+    "home": "file:../../feature/home",
+    "course": "file:../../feature/course",
+    "user": "file:../../feature/user",
+    "square": "file:../../feature/square",
+    "@hadss/hmrouter": "@param:parameter.hmrouter_ver"
+  }
+}

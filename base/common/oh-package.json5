@@ -1,0 +1,17 @@
+{
+  "name": "common",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@ohos/axios": "@param:parameter.axios_ver",
+    "@pura/harmony-utils": "@param:parameter.harmony-utils_ver",
+    "@abner/refresh_v2": "@param:parameter.refresh_v2",
+    "@hadss/hmrouter": "@param:parameter.hmrouter_ver",
+    "@hadss/hmrouter-transitions": "@param:parameter.hmrouter_ver"
+  },
+  "devDependencies": {},
+  "dynamicDependencies": {}
+}
