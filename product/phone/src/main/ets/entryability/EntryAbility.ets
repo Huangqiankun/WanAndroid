@@ -1,14 +1,22 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
-import { AppUtil, LogUtil, CrashUtil, DeviceUtil, InternalAxiosRequestConfig, NetworkManager, ToastUtil } from 'common';
+import {
+  AppUtil,
+  LogUtil,
+  CrashUtil,
+  DeviceUtil,
+  InternalAxiosRequestConfig,
+  NetworkManager,
+  ToastUtil,
+  UserStorageUtil,
+  FeatureHomePath
+} from 'common';
 import BuildProfile from 'BuildProfile';
 import { HMRouterMgr } from '@hadss/hmrouter';
 
 const DOMAIN = 0x0000;
 
-// 定义一个 Key 用来存 Cookie
-const APP_COOKIE_KEY = 'app_cookie_key';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -24,8 +32,8 @@ export default class EntryAbility extends UIAbility {
 
   private initSdk(): void {
     this.initUtil()
-    this.initNetWork()
     this.initHMRoute()
+    this.initNetWork()
   }
 
   private initHMRoute() {
@@ -37,6 +45,7 @@ export default class EntryAbility extends UIAbility {
 
   private initUtil(): void {
     AppUtil.init(this.context);
+    UserStorageUtil.init()
     //初始化日志  0x1010  设置日志对应的领域标识, 'WanAndroid' 设置日志标识 , true 是否打印日志 , true 日志打印方式 true-hilog、false-console
     LogUtil.init(0x1010, 'WanAndroid', BuildProfile.DEBUG, true);
     //异常工具捕获初始化
@@ -50,7 +59,7 @@ export default class EntryAbility extends UIAbility {
       //请求拦截器
       headerHandler: (config: InternalAxiosRequestConfig) => {
         // 从内存/缓存中取出 Cookie 字符串
-        const cookieStr = AppStorage.get<string>(APP_COOKIE_KEY);
+        const cookieStr = UserStorageUtil.getCookStr();
         if (cookieStr) {
           // 这里的 Key 必须叫 'Cookie'
           config.headers['Cookie'] = cookieStr;
@@ -68,7 +77,8 @@ export default class EntryAbility extends UIAbility {
           // 如果解析到了有效的 Cookie，就存起来
           if (cookieStr && cookieStr.length > 0) {
             // 这里为了演示简单直接覆盖，实际业务可能需要和旧 Cookie 合并
-            AppStorage.setOrCreate(APP_COOKIE_KEY, cookieStr);
+            // AppStorage.setOrCreate(APP_COOKIE_KEY, cookieStr);
+            UserStorageUtil.saveCookie(cookieStr)
             console.info('更新 Cookie 成功:', cookieStr);
           }
         }
@@ -77,7 +87,9 @@ export default class EntryAbility extends UIAbility {
       errorHandler: (code, msg) => {
         if (code == -1001) {
           //登录失效
-          // todo 这里将会跳转至登录页面
+          HMRouterMgr.removeAll();
+          //  这里将会跳转至登录页面
+          HMRouterMgr.replace({ pageUrl: FeatureHomePath.LOGIN, param: { "from": "NetWork" } });
           return
         }
         //其他code 根据业务场景来处理，吐司已经在内部拦截器实现，当然也可以在这里弹吐司

@@ -94,7 +94,7 @@ export class NetworkManager {
       baseURL: config.baseUrl,
       timeout: config.timeout || 10000,
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        // 'Content-Type': 'application/json;charset=utf-8'
       }
     });
 

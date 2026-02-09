@@ -1,9 +1,10 @@
 import { HMRouter } from "@hadss/hmrouter";
+import { FeatureHomePath } from "common";
 
-@HMRouter({ pageUrl: 'Home/HomePage' })
+@HMRouter({ pageUrl: FeatureHomePath.HOME })
 @ComponentV2
 export struct HomePage {
-  @Local message: string = 'HomePage';
+  @Local message: string = 'This is HomePage';
 
   build() {
     Row() {

@@ -20,7 +20,7 @@
           }
         },
         "buildProfileFields": {
-          "BASE_URL": "https://www.wanandroid.com/"
+          "BASE_URL": "https://www.wanandroid.com"
         }
       }
     },
@@ -28,7 +28,7 @@
       "name": "debug",
       "arkOptions": {
         "buildProfileFields": {
-          "BASE_URL": "https://www.wanandroid.com/"
+          "BASE_URL": "https://www.wanandroid.com"
         }
       }
     }

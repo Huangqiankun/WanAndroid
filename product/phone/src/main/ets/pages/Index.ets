@@ -1,5 +1,6 @@
 import { HMDefaultGlobalAnimator, HMNavigation } from "@hadss/hmrouter";
 import { AttributeUpdater } from "@kit.ArkUI";
+import { ProductPhonePath } from "common";
 
 @Entry
 @Component
@@ -11,7 +12,7 @@ export struct Index {
     Column(){
       // 使用HMNavigation容器
       HMNavigation({
-        navigationId: 'MainNavigation', homePageUrl: 'PagePhoneLoading',
+        navigationId: 'MainNavigation', homePageUrl: ProductPhonePath.LOADING,
         options: {
           standardAnimator: HMDefaultGlobalAnimator.STANDARD_ANIMATOR,
           dialogAnimator: HMDefaultGlobalAnimator.DIALOG_ANIMATOR,
