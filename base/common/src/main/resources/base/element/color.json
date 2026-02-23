@@ -10,11 +10,15 @@
     },
     {
       "name": "common_color_theme",
-      "value": "#5FD9A0"
+      "value": "#2c2c2c"
     },
     {
       "name": "common_color_40theme",
-      "value": "#605FD9A0"
+      "value": "#60c2c2c2"
+    },
+    {
+      "name": "common_color_no_select",
+      "value": "#cdcdcd"
     },
     {
       "name": "common_color_grey_d2",

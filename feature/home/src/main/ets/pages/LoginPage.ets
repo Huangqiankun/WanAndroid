@@ -7,7 +7,7 @@ import { JSON } from "@kit.ArkTS";
 
 @HMRouter({ pageUrl: FeatureHomePath.LOGIN })
 @ComponentV2
-@Preview
+// @Preview
 export struct LoginPage {
   @Local inputPwd: string = ""
   @Local inputUser: string = ""
