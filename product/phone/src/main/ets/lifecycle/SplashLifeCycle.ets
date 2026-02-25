@@ -1,11 +1,10 @@
 import { HMLifecycle, HMLifecycleContext, HMRouterMgr, IHMLifecycle } from "@hadss/hmrouter";
-import { FeatureHomePath, LogUtil, UserInfoResult, UserStorageUtil } from "common";
+import { FeatureHomePath, LogUtil, ProductPhonePath, UserInfoResult, UserStorageUtil } from "common";
 import { PhoneApi } from "../net/PhoneApi";
 
 
 @HMLifecycle({ lifecycleName: "SplashLifeCycle" })
 export class SplashLifeCycle implements IHMLifecycle {
-
   onShown(ctx: HMLifecycleContext): void {
     LogUtil.warn(`WelcomeLifecycle to page onShown ${ctx.navContext?.pathInfo.name}`);
     this.checkAndJump();
@@ -23,7 +22,7 @@ export class SplashLifeCycle implements IHMLifecycle {
       return
     }
     //如果登录了，先调用用户信息接口，确保cookie没有过期
-     this.checkLoginStatus()
+    this.checkLoginStatus()
   }
 
   private jumpToLogin() {
@@ -37,7 +36,7 @@ export class SplashLifeCycle implements IHMLifecycle {
       // // 接口校验通过：说明没失效，跳转到首页
       PhoneApi.getUserInfo().then((userInfoResult: UserInfoResult) => {
         LogUtil.debug("checkLoginStatus->getUserInfo-> " + JSON.stringify(userInfoResult))
-        HMRouterMgr.replace({ pageUrl: FeatureHomePath.HOME, param: { "from": "Loading" } })
+        HMRouterMgr.replace({ pageUrl: ProductPhonePath.MAIN, param: { "from": "Loading" } })
       })
 
     } catch (er) {

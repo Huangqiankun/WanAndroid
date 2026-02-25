@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\Administrator\\.ohos\\config\\default_WanAndroid_OS4rG3IIUXXf3VBn9IS2JDCfYnPyoPGakzC6IXSnizg=.cer",
+          "certpath": "C:\\Users\\Admin\\.ohos\\config\\default_WanAndroid_0VlHnu2oijYDgl5oQlK3Lar3onmlYmdeM2KFA-TBBH4=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001A21345E7608ECB595BD8B2AFD882F7A47CC84970D9694C266B61B2C9C7AA122F12819F3236E4F",
-          "profile": "C:\\Users\\Administrator\\.ohos\\config\\default_WanAndroid_OS4rG3IIUXXf3VBn9IS2JDCfYnPyoPGakzC6IXSnizg=.p7b",
+          "keyPassword": "0000001AAEF32EADA333869067BDC01000E635ACE37C1ED2FF493E7CB3E2223580D2A5B64E24974AF113",
+          "profile": "C:\\Users\\Admin\\.ohos\\config\\default_WanAndroid_0VlHnu2oijYDgl5oQlK3Lar3onmlYmdeM2KFA-TBBH4=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\Administrator\\.ohos\\config\\default_WanAndroid_OS4rG3IIUXXf3VBn9IS2JDCfYnPyoPGakzC6IXSnizg=.p12",
-          "storePassword": "0000001A5F7AD6A002411EBAC08D3A12FBD796E665F6B991F87836CA55272882EC9374B6D44BADF4C4C6"
+          "storeFile": "C:\\Users\\Admin\\.ohos\\config\\default_WanAndroid_0VlHnu2oijYDgl5oQlK3Lar3onmlYmdeM2KFA-TBBH4=.p12",
+          "storePassword": "0000001AC5568B9A98BC44DFB5CBA845E89B0C2AAAF4F2DE4B820C03683E37DF8D8685859F99B2B21A26"
         }
       }
     ],
