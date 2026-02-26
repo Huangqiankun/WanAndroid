@@ -15,4 +15,5 @@ export  { InternalAxiosRequestConfig } from '@ohos/axios';
 export * from './src/main/ets/constants/RoutePath'
 
 export * from './src/main/ets/bean/CommonReponseResult'
+export * from './src/main/ets/data_source/BasicDataSource'
 

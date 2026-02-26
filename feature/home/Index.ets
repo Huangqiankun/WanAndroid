@@ -1,3 +1,3 @@
 // export * from 'common'
 
-export * from 'home/ets/component/container/HomeCont'
+export * from 'home/ets/component/HomeComp'
