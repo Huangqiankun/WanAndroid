@@ -110,9 +110,10 @@ export struct HomeComp {
       if (this.page == 0) {
         this.listArticle = homeArticleList.datas
       }else{
-        homeArticleList.datas.forEach((item: HomeListArticleResultDatas) => {
-          this.listArticle.push(item)
-        })
+        // homeArticleList.datas.forEach((item: HomeListArticleResultDatas) => {
+        //   this.listArticle.push(item)
+        // })
+        this.listArticle = this.listArticle.concat(homeArticleList.datas)
       }
       this.hasNextPage = homeArticleList.curPage < homeArticleList.pageCount;
       this.controller.refreshSuccess()
