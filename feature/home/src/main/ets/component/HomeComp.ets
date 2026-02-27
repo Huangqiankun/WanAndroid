@@ -109,10 +109,11 @@ export struct HomeComp {
       LogUtil.debug("HomeCont getHomeArticleList:" + JSON.stringify(homeArticleList))
       if (this.page == 0) {
         this.listArticle = homeArticleList.datas
+      }else{
+        homeArticleList.datas.forEach((item: HomeListArticleResultDatas) => {
+          this.listArticle.push(item)
+        })
       }
-      homeArticleList.datas.forEach((item: HomeListArticleResultDatas) => {
-        this.listArticle.push(item)
-      })
       this.hasNextPage = homeArticleList.curPage < homeArticleList.pageCount;
       this.controller.refreshSuccess()
       this.controller.loadSuccess()
