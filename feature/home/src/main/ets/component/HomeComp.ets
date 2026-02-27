@@ -1,5 +1,5 @@
-import { BasicDataSource, ListView, LogUtil } from "common";
-import { BannerResult, HomeListArticleResult } from "../model/ResponseResult";
+import { BasicDataSource, CommonHeader, LogUtil, PullToRefreshLayout, RefreshController, ToastUtil } from "common";
+import { BannerResult, HomeListArticleResult, HomeListArticleResultDatas } from "../model/ResponseResult";
 import { HomeApi } from "../net/HomeApi";
 
 class MyBannerDataSource extends BasicDataSource {
@@ -19,70 +19,130 @@ class MyBannerDataSource extends BasicDataSource {
   }
 }
 
-
 @ComponentV2
 export struct HomeComp {
-  @Local page: number = 1
+  @Local page: number = 0
   private swiperController: SwiperController = new SwiperController();
   private bannerData: MyBannerDataSource = new MyBannerDataSource()
-  private scrollerForScroll: Scroller = new Scroller();
   private scrollerForList: Scroller = new Scroller();
   @Local listBanner: BannerResult[] = []
+  @Local listArticle: HomeListArticleResultDatas[] = []
+  /*RefreshLayout控制器*/
+  private controller: RefreshController = new RefreshController()
+  private hasNextPage: boolean = false
+
+  // 组件生命周期
+  aboutToAppear() {
+    this.getHomeBanner()
+    this.getHomeArticleList()
+  }
+
+  build() {
+    Column() {
+      //统一标题
+      CommonHeader({ title: "首页" })
+      PullToRefreshLayout({
+        contentView: () => {
+          this.contentView()
+        },
+        viewKey: "HomeComp",
+        controller: this.controller,
+        scroller: this.scrollerForList,
+        onRefresh: () => {
+          LogUtil.debug("HomeComp onRefresh")
+          this.onRefreshData()
+        },
+        onLoad: () => {
+          LogUtil.debug("HomeComp onLoad")
+          this.onLoadData()
+        },
+        onCanPullLoad: () => {
+          return this.scrollerForList.isAtEnd()
+        }
+      }).layoutWeight(1)
+    }.width('100%').height('100%')
+  }
+
+  @Builder
+  contentView() {
+    List({ scroller: this.scrollerForList, space: 10 }) {
+      ListItem() {
+        this.swiperBuilder()
+      }
+
+      Repeat<HomeListArticleResultDatas>(this.listArticle).each((ri: RepeatItem<HomeListArticleResultDatas>) => {
+        ListItem() {
+          Text('' + ri.item.title)
+            .width('100%')
+            .height(100)
+            .fontSize(16)
+            .textAlign(TextAlign.Center)
+            .borderRadius(10)
+            .backgroundColor(0xFFFFFF)
+        }
+      })
+    }.width('100%')
+    .height('100%') // 这里的 100% 会自动扣除父容器 Tabs 占用的底部高度
+    .layoutWeight(1) // 确保 List 占据剩余所有空间
+    .edgeEffect(EdgeEffect.Spring) // 加上回弹效果更流畅
+  }
+
+  private async onRefreshData() {
+    this.page = 0
+    this.getHomeArticleList()
+    this.getHomeBanner()
+  }
+
+  private async onLoadData() {
+    if (!this.hasNextPage) {
+      ToastUtil.showShort("没有更多数据了！")
+      this.controller.loadError()
+      return
+    }
+    this.page++
+    this.getHomeArticleList()
+  }
 
   private async getHomeArticleList() {
     LogUtil.debug('HomeCont Child getHomeArticleList');
     HomeApi.getHomeList(this.page).then((homeArticleList: HomeListArticleResult) => {
       LogUtil.debug("HomeCont getHomeArticleList:" + JSON.stringify(homeArticleList))
+      if (this.page == 0) {
+        this.listArticle = homeArticleList.datas
+      }
+      homeArticleList.datas.forEach((item: HomeListArticleResultDatas) => {
+        this.listArticle.push(item)
+      })
+      this.hasNextPage = homeArticleList.curPage < homeArticleList.pageCount;
+      this.controller.refreshSuccess()
+      this.controller.loadSuccess()
     })
   }
 
   private async getHomeBanner() {
     HomeApi.homeBannerLst().then((listBanner: BannerResult[]) => {
       LogUtil.debug("HomeCont getHomeBanner:" + JSON.stringify(listBanner))
-      this.bannerData.setData(listBanner)
       this.listBanner = listBanner
     })
   }
 
-  // 组件生命周期
-  onDidBuild() {
-    LogUtil.debug('HomeCont Child onDidBuild');
-  }
-
-  // 组件生命周期
-  aboutToAppear() {
-    LogUtil.debug('HomeCont Child aboutToAppear');
-    this.getHomeBanner()
-    this.getHomeArticleList()
-  }
-
-  // 组件生命周期
-  aboutToDisappear() {
-    LogUtil.debug('HomeCont Child aboutToDisappear');
-  }
-
-  build() {
-    Scroll(this.scrollerForScroll) {
-      Column() {
-        // banner
-        this.swiperBuilder()
-        //列表
-        this.ArticleListBuilder()
-        
-      }.width('100%')
-      .height('100%')
-    }.width('100%')
-    .height('100%')
-
-  }
-
-  @Builder
-  ArticleListBuilder() {
-    // List({ space: 20, initialIndex: 0 }) {
-    //
-    // }
-
-  }
+  // @Builder
+  // ArticleListBuilder() {
+  //   List({ space: 2, initialIndex: 0 }) {
+  //     Repeat<HomeListArticleResultDatas>(this.listArticle).each((ri: RepeatItem<HomeListArticleResultDatas>) => {
+  //       ListItem() {
+  //         Text('' + ri.item.title)
+  //           .width('100%')
+  //           .height(100)
+  //           .fontSize(16)
+  //           .textAlign(TextAlign.Center)
+  //           .borderRadius(10)
+  //           .backgroundColor(0xFFFFFF)
+  //       }
+  //     })
+  //   }.width('100%')
+  //   .height('100%')
+  // }
 
   @Builder
   swiperBuilder() {
@@ -91,13 +151,13 @@ export struct HomeComp {
       //   Image(item.imagePath).width('90%').height(160)
       // })
       Repeat<BannerResult>(this.listBanner).each((ri: RepeatItem<BannerResult>) => {
-        Image(ri.item.imagePath).width('90%').height(160)
+        Image(ri.item.imagePath).width('100%').height(160)
       })
     }
     .cachedCount(2)
     .index(1)
     .width('100%')
-    .height(160)
+    // .height('30%')
     .autoPlay(true)
     .interval(4000)
     .indicatorInteractive(true)

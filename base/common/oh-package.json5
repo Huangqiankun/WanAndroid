@@ -8,7 +8,7 @@
   "dependencies": {
     "@ohos/axios": "@param:parameter.axios_ver",
     "@pura/harmony-utils": "@param:parameter.harmony-utils_ver",
-    "@abner/refresh_v2": "@param:parameter.refresh_v2",
+    "@zhongrui/pull_to_refresh_v2": "@param:parameter.refresh_v2",
     "@hadss/hmrouter": "@param:parameter.hmrouter_ver",
     "@hadss/hmrouter-transitions": "@param:parameter.hmrouter_ver"
   },

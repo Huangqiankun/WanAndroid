@@ -4,6 +4,6 @@
     "axios_ver": "^2.2.7",
     "harmony-utils_ver": "^1.4.0",
     "hmrouter_ver": "^1.2.2",
-    "refresh_v2": "^1.0.4"
+    "refresh_v2": "^2.0.8"
   }
 }

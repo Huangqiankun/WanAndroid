@@ -143,6 +143,17 @@ export default class EntryAbility extends UIAbility {
       windowClass.setWindowLayoutFullScreen(true);
       // 2. 隐藏状态栏（如果需要彻底全屏）或保持显示但背景透明
       windowClass.setWindowSystemBarEnable(['status', 'navigation']);
+      // 获取并存储初始状态栏高度
+      const type = window.AvoidAreaType.TYPE_SYSTEM;
+      const avoidArea = windowClass.getWindowAvoidArea(type);
+      AppStorage.setOrCreate('statusBarHeight', px2vp(avoidArea.topRect.height));
+
+      // 监听避让区动态变化
+      windowClass.on('avoidAreaChange', (data) => {
+        if (data.type === window.AvoidAreaType.TYPE_SYSTEM) {
+          AppStorage.setOrCreate('statusBarHeight', px2vp(data.area.topRect.height));
+        }
+      });
     });
   }
 
