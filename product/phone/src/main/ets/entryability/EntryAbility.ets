@@ -72,12 +72,18 @@ export default class EntryAbility extends UIAbility {
         // 在玩Android接口中，它是 'set-cookie' 字段
         const setCookie = headers['set-cookie'] as string[] | string;
         if (setCookie) {
+          // const oldCookieStr = UserStorageUtil.getCookStr();
+          // if (oldCookieStr) {
+          //   return
+          // }
+
           // 处理 Cookie 逻辑 (调用下面的工具方法)
           const cookieStr = this.processSetCookie(setCookie);
           // 如果解析到了有效的 Cookie，就存起来
-          if (cookieStr && cookieStr.length > 0) {
+          if (cookieStr && cookieStr.length > 0 && cookieStr.search("token_pass") > 0) {
             // 这里为了演示简单直接覆盖，实际业务可能需要和旧 Cookie 合并
             // AppStorage.setOrCreate(APP_COOKIE_KEY, cookieStr);
+
             UserStorageUtil.saveCookie(cookieStr)
             console.info('更新 Cookie 成功:', cookieStr);
           }
@@ -88,6 +94,7 @@ export default class EntryAbility extends UIAbility {
         if (code == -1001) {
           //登录失效
           HMRouterMgr.removeAll();
+          UserStorageUtil.clearUserInfo()
           //  这里将会跳转至登录页面
           HMRouterMgr.replace({ pageUrl: FeatureHomePath.LOGIN, param: { "from": "NetWork" } });
           return

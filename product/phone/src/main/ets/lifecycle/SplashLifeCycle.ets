@@ -14,15 +14,18 @@ export class SplashLifeCycle implements IHMLifecycle {
     await new Promise<void>((resolve) => {
       setTimeout(resolve, 2000);
     });
-    const isLogin = UserStorageUtil.isLogin()
-    LogUtil.warn(`WelcomeLifecycle isLogin=${isLogin}`)
-    if (!isLogin) {
-      //如果没有登录，直接跳转登录页面
-      this.jumpToLogin()
-      return
-    }
-    //如果登录了，先调用用户信息接口，确保cookie没有过期
-    this.checkLoginStatus()
+    // const isLogin = UserStorageUtil.isLogin()
+    // LogUtil.warn(`WelcomeLifecycle isLogin=${isLogin}`)
+    // if (!isLogin) {
+    //   //如果没有登录，直接跳转登录页面
+    //   this.jumpToLogin()
+    //   return
+    // }
+    // //如果登录了，先调用用户信息接口，确保cookie没有过期
+    // this.checkLoginStatus()
+
+    //不强制登录，直接进入首页，开启游客模式
+    this.jumpMain()
   }
 
   private jumpToLogin() {
@@ -36,11 +39,15 @@ export class SplashLifeCycle implements IHMLifecycle {
       // // 接口校验通过：说明没失效，跳转到首页
       PhoneApi.getUserInfo().then((userInfoResult: UserInfoResult) => {
         LogUtil.debug("checkLoginStatus->getUserInfo-> " + JSON.stringify(userInfoResult))
-        HMRouterMgr.replace({ pageUrl: ProductPhonePath.MAIN, param: { "from": "Loading" } })
+        this.jumpMain()
       })
 
     } catch (er) {
       console.error("验证登录失效或网络异常", er);
     }
+  }
+
+  private jumpMain(){
+    HMRouterMgr.replace({ pageUrl: ProductPhonePath.MAIN, param: { "from": "Loading" } })
   }
 }

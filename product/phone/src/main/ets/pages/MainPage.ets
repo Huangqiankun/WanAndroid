@@ -1,6 +1,7 @@
 import { HMRouter } from "@hadss/hmrouter";
 import { ProductPhonePath } from "common";
 import { HomeComp } from "home";
+import { UserComp } from "user";
 
 @HMRouter({ pageUrl: ProductPhonePath.MAIN })
 @ComponentV2
@@ -48,7 +49,7 @@ export struct MainPage {
 
         TabContent() {
           Column() {
-            Text('我的内容')
+            UserComp()
           }.width('100%').height('100%').backgroundColor('#E67C92').justifyContent(FlexAlign.Center)
         }.tabBar(this.tabBuilder('我的', 3, $r('app.media.phone_tab_my'), $r('app.media.phone_tab_select_my')))
       }

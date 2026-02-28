@@ -65,21 +65,22 @@ export struct HomeComp {
 
   @Builder
   contentView() {
-    List({ scroller: this.scrollerForList, space: 10 }) {
+    List({ scroller: this.scrollerForList, space: 8 }) {
       ListItem() {
         this.swiperBuilder()
       }
 
       Repeat<HomeListArticleResultDatas>(this.listArticle).each((ri: RepeatItem<HomeListArticleResultDatas>) => {
         ListItem() {
-          Text('' + ri.item.title)
+          Text(ri.item.title)
             .width('100%')
             .height(100)
             .fontSize(16)
             .textAlign(TextAlign.Center)
             .borderRadius(10)
             .backgroundColor(0xFFFFFF)
-        }
+            .padding({left:10,right:10})
+        }.margin({ left: 8, right: 8 })
       })
     }.width('100%')
     .height('100%') // 这里的 100% 会自动扣除父容器 Tabs 占用的底部高度
@@ -109,7 +110,7 @@ export struct HomeComp {
       LogUtil.debug("HomeCont getHomeArticleList:" + JSON.stringify(homeArticleList))
       if (this.page == 0) {
         this.listArticle = homeArticleList.datas
-      }else{
+      } else {
         // homeArticleList.datas.forEach((item: HomeListArticleResultDatas) => {
         //   this.listArticle.push(item)
         // })
