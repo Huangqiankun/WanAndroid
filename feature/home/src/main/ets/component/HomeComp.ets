@@ -1,3 +1,4 @@
+import { HMLifecycleState, HMRouterMgr } from "@hadss/hmrouter";
 import { BasicDataSource, CommonHeader, LogUtil, PullToRefreshLayout, RefreshController, ToastUtil } from "common";
 import { BannerResult, HomeListArticleResult, HomeListArticleResultDatas } from "../model/ResponseResult";
 import { HomeApi } from "../net/HomeApi";
@@ -30,11 +31,26 @@ export struct HomeComp {
   /*RefreshLayout控制器*/
   private controller: RefreshController = new RefreshController()
   private hasNextPage: boolean = false
+  private lifecycleOwner = HMRouterMgr.getCurrentLifecycleOwner();
 
   // 组件生命周期
   aboutToAppear() {
     this.getHomeBanner()
     this.getHomeArticleList()
+    this.lifecycleOwner?.addObserver(HMLifecycleState.onHidden,this.onHidden)
+    this.lifecycleOwner?.addObserver(HMLifecycleState.onShown,this.onShow)
+  }
+  aboutToDisappear(): void {
+    this.lifecycleOwner?.removeObserver(HMLifecycleState.onHidden,this.onHidden)
+    this.lifecycleOwner?.removeObserver(HMLifecycleState.onShown,this.onShow)
+  }
+
+  onShow(){
+    LogUtil.debug("HomeComp onShow")
+  }
+
+  onHidden(){
+    LogUtil.debug("HomeComp onHidden")
   }
 
   build() {
