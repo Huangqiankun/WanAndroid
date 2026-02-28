@@ -1,14 +1,22 @@
 import { HMRouter } from "@hadss/hmrouter";
-import { ProductPhonePath } from "common";
+import { LogUtil, ProductPhonePath } from "common";
 import { HomeComp } from "home";
 import { UserComp } from "user";
 
-@HMRouter({ pageUrl: ProductPhonePath.MAIN })
+@HMRouter({ pageUrl: ProductPhonePath.MAIN, lifecycle: "MainLifeCycle" })
 @ComponentV2
   // @Preview
 export struct MainPage {
   @Local selectedIndex: number = 0;
   private controller: TabsController = new TabsController();
+
+  aboutToAppear(): void {
+    LogUtil.debug("MainLifeCycle aboutToAppear")
+  }
+
+  aboutToDisappear(): void {
+    LogUtil.debug("MainLifeCycle aboutToDisappear")
+  }
 
   @Builder
   tabBuilder(title: string, targetIndex: number, iconStr: Resource, selectIconStr: Resource) {
