@@ -25,8 +25,7 @@ export struct CollectListPage {
   private viewModel2 = getViewModel<CollectListLifeCycle>()
   private controller: RefreshController = new RefreshController();
   private scrollerForList: Scroller = new Scroller();
-  @Local
-  private page: number = 0
+
 
   /**
    * 通过Monitor 监听 ViewModel 里的请求触发器
@@ -49,7 +48,7 @@ export struct CollectListPage {
 
   aboutToAppear(): void {
     LogUtil.debug("CollectListPage aboutToAppear")
-    this.onRefreshData()
+    // this.onRefreshData()
   }
 
   aboutToReuse(): void {
@@ -86,8 +85,8 @@ export struct CollectListPage {
   }
 
   private async onRefreshData() {
-    this.page = 0
-    this.viewModel.collectArticleList2(this.page)
+    this.viewModel.page = 0
+    this.viewModel.collectArticleList2()
     // this.viewModel.collectArticleList(this.page, (success, hasMore) => {
     //   this.stopRefreshOrLoadAnim(success, hasMore)
     // })
@@ -99,8 +98,8 @@ export struct CollectListPage {
       this.controller.loadError()
       return
     }
-    this.page++
-    this.viewModel.collectArticleList2(this.page)
+    this.viewModel.page++
+    this.viewModel.collectArticleList2()
     // this.viewModel.collectArticleList(this.page, (success, hasMore) => {
     //   this.stopRefreshOrLoadAnim(success, hasMore)
     // })

@@ -15,20 +15,21 @@ export class CollectListLifeCycle implements IHMLifecycle {
   // 用于触发监听的自增种子（如果状态值没变，但请求结束了，靠它触发 UI）
   @Trace requestTrigger: number = 0;
 
-  onShown(ctx: HMLifecycleContext): void {
-
-  }
-
+  @Trace page: number = 0
   //------------------------- 以上变量仅限 collectArticleList2 方法调用-----------------
 
+  onShown(ctx: HMLifecycleContext): void {
+    this.page=0
+    this.collectArticleList2()
+  }
   /**
    * 该方法 通过 onFinished 触发 UI
    * @param page
    * @param onFinished
    */
-  collectArticleList(page: number, onFinished?: (success: boolean, hasMore: boolean) => void) {
-    UserApi.getCollectList(page).then((collectList: CollectListResult) => {
-      if (page == 0) {
+  collectArticleList(onFinished?: (success: boolean, hasMore: boolean) => void) {
+    UserApi.getCollectList(this.page).then((collectList: CollectListResult) => {
+      if (this.page == 0) {
         this.listArticle = collectList.datas
       } else {
         this.listArticle = this.listArticle.concat(collectList.datas)
@@ -46,10 +47,10 @@ export class CollectListLifeCycle implements IHMLifecycle {
    * 该方法 通过 requestTrigger+@Monitor 触发 UI
    * @param page
    */
-  collectArticleList2(page: number) {
+  collectArticleList2() {
     this.loadStatus = 'LOADING'
-    UserApi.getCollectList(page).then((collectList: CollectListResult) => {
-      if (page == 0) {
+    UserApi.getCollectList(this.page).then((collectList: CollectListResult) => {
+      if (this.page == 0) {
         this.listArticle = collectList.datas
       } else {
         this.listArticle = this.listArticle.concat(collectList.datas)
