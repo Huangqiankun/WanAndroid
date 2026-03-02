@@ -3,8 +3,10 @@ import { FeatureHomePath, LogUtil, ProductPhonePath, UserInfoResult, UserStorage
 import { PhoneApi } from "../net/PhoneApi";
 
 
-@HMLifecycle({ lifecycleName: "SplashLifeCycle" })
+@HMLifecycle({ lifecycleName: SplashLifeCycle.lifeCycleName })
 export class SplashLifeCycle implements IHMLifecycle {
+  static readonly lifeCycleName = "SplashLifeCycle"
+
   onShown(ctx: HMLifecycleContext): void {
     LogUtil.warn(`WelcomeLifecycle to page onShown ${ctx.navContext?.pathInfo.name}`);
     this.checkAndJump();
@@ -47,7 +49,7 @@ export class SplashLifeCycle implements IHMLifecycle {
     }
   }
 
-  private jumpMain(){
+  private jumpMain() {
     HMRouterMgr.replace({ pageUrl: ProductPhonePath.MAIN, param: { "from": "Loading" } })
   }
 }

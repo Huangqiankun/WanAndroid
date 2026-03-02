@@ -37,6 +37,7 @@ export struct HomeComp {
   aboutToAppear() {
     this.getHomeBanner()
     this.getHomeArticleList()
+    //组件绑定 page 生命周期 测试
     this.lifecycleOwner?.addObserver(HMLifecycleState.onHidden,this.onHidden)
     this.lifecycleOwner?.addObserver(HMLifecycleState.onShown,this.onShow)
   }

@@ -1,11 +1,21 @@
 import { HMLifecycle, HMLifecycleContext, HMRouterMgr, IHMLifecycle } from "@hadss/hmrouter";
 import { Any, LogUtil } from "common";
 
-
-@HMLifecycle({ lifecycleName: "MainLifeCycle" })
+@ObservedV2
+@HMLifecycle({ lifecycleName: MainLifeCycle.lifeCycleName })
 export class MainLifeCycle implements IHMLifecycle {
+  static readonly lifeCycleName="MainLifeCycle"
   onPrepare(ctx: HMLifecycleContext): void {
     LogUtil.debug("MainLifeCycle onPrepare")
+  }
+
+  @Trace isRefreshing: boolean = false;
+  test(){
+    LogUtil.debug("MainLifeCycle test")
+  }
+
+  test2(){
+    LogUtil.debug("MainLifeCycle test222")
   }
 
   onWillAppear(ctx: HMLifecycleContext): void {

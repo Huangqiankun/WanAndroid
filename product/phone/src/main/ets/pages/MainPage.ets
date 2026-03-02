@@ -1,17 +1,39 @@
-import { HMRouter } from "@hadss/hmrouter";
+import { HMRouter, HMRouterMgr, IHMLifecycle } from "@hadss/hmrouter";
 import { LogUtil, ProductPhonePath } from "common";
 import { HomeComp } from "home";
 import { UserComp } from "user";
+import { MainLifeCycle } from "../lifecycle/MainLifeCycle";
 
-@HMRouter({ pageUrl: ProductPhonePath.MAIN, lifecycle: "MainLifeCycle" })
+@HMRouter({ pageUrl: ProductPhonePath.MAIN, lifecycle: MainLifeCycle.lifeCycleName })
 @ComponentV2
   // @Preview
 export struct MainPage {
   @Local selectedIndex: number = 0;
   private controller: TabsController = new TabsController();
 
+  // 定义一个私有方法或 getter 来获取强转后的实例
+  private getLifecycleInstance(): MainLifeCycle | undefined {
+    const lifecycle: IHMLifecycle | undefined = HMRouterMgr.getCurrentLifecycleOwner()?.getLifecycle();
+
+    // 使用 instanceof 进行安全检查并强转
+    if (lifecycle instanceof MainLifeCycle) {
+      return lifecycle as MainLifeCycle;
+    }
+    return undefined;
+  }
+
+  @Computed
+  get viewModel():MainLifeCycle{
+    return HMRouterMgr.getCurrentLifecycleOwner()?.getLifecycle() as MainLifeCycle
+  }
+
   aboutToAppear(): void {
-    LogUtil.debug("MainLifeCycle aboutToAppear")
+    LogUtil.debug("MainLifeCycle aboutToAppear" + HMRouterMgr.getCurrentLifecycleOwner()?.getLifecycle())
+
+    const myLifecycle = this.getLifecycleInstance();
+    myLifecycle?.test()
+
+    this.viewModel.test2()
   }
 
   aboutToDisappear(): void {
@@ -74,7 +96,6 @@ export struct MainPage {
       .backgroundColor('#F1F3F5')
       .scrollable(true)
       .padding({ bottom: 30 })
-
     }
     .width('100%')
 

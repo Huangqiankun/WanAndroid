@@ -23,4 +23,5 @@ export * from './src/main/ets/bean/CommonReponseResult'
 export * from './src/main/ets/data_source/BasicDataSource'
 
 export * from './src/main/ets/components/CommonCom'
+export * from './src/main/ets/utils/ViewModelUtil'
 

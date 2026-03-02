@@ -1,5 +1,15 @@
 import { HMRouterMgr } from "@hadss/hmrouter"
-import { CommonHeader, FeatureHomePath, LogUtil, UserInfoResult, UserInfoResultUserInfo, UserStorageUtil } from "common"
+import { when } from "@ohos/hypium"
+import {
+  CommonHeader,
+  FeatureHomePath,
+  FeatureUserPath,
+  LogUtil,
+  ToastUtil,
+  UserInfoResult,
+  UserInfoResultUserInfo,
+  UserStorageUtil
+} from "common"
 import { UserApi } from "../net/UserApi"
 
 @ComponentV2
@@ -32,7 +42,7 @@ export struct UserComp {
     List({ space: 8 }) {
       Repeat<UserGridItem>(this.gridData).each((ri: RepeatItem<UserGridItem>) => {
         ListItem() {
-          this.listItemView(ri.item)
+          this.listItemView(ri.item, ri.index)
         }
       })
 
@@ -55,13 +65,16 @@ export struct UserComp {
   }
 
   @Builder
-  listItemView(userGridItem: UserGridItem) {
+  listItemView(userGridItem: UserGridItem, index: number) {
     Row() {
       Image(userGridItem.icon).width(33).height(33)
       Text(userGridItem.title).fontColor($r('app.color.common_color_theme')).margin({ left: 30 })
     }.width('100%')
     .backgroundColor($r('app.color.common_color_white'))
     .padding({ top: 6, bottom: 6, left: 30 })
+    .onClick(() => {
+      this.onItemGridClick(userGridItem, index)
+    })
   }
 
   @Builder
@@ -79,6 +92,23 @@ export struct UserComp {
     .padding({ bottom: 16 })
     .backgroundColor($r('app.color.common_color_theme'))
     .alignItems(HorizontalAlign.Center)
+  }
+
+  onItemGridClick(userGridItem: UserGridItem, index: number) {
+    LogUtil.debug(`onItemGridClick 点击了${userGridItem.title} index=${index}`)
+    if (!UserStorageUtil.isLogin()) {
+      ToastUtil.showShort("请登录")
+      this.onClickLogin()
+      return
+    }
+    if (index == 1) {
+      this.goToCollect()
+      return
+    }
+  }
+
+  private goToCollect() {
+    HMRouterMgr.push({ pageUrl: FeatureUserPath.COLLECT });
   }
 
   onClickLogin() {

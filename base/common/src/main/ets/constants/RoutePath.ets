@@ -4,6 +4,7 @@ export class ProductPhonePath {
 }
 
 export class FeatureUserPath {
+  static readonly COLLECT = "user/CollectListPage"
 }
 
 export class FeatureCoursePath {

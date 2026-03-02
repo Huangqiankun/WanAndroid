@@ -1,7 +1,8 @@
 import { HMRouter } from "@hadss/hmrouter"
 import { ProductPhonePath } from "common"
+import { SplashLifeCycle } from "../lifecycle/SplashLifeCycle"
 
-@HMRouter({ pageUrl: ProductPhonePath.LOADING, lifecycle: "SplashLifeCycle", singleton: true })
+@HMRouter({ pageUrl: ProductPhonePath.LOADING, lifecycle: SplashLifeCycle.lifeCycleName, singleton: true })
 @ComponentV2
 @Preview
 export struct SplashPage {
