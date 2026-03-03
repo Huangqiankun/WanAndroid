@@ -35,22 +35,22 @@ export struct HomeComp {
 
   // 组件生命周期
   aboutToAppear() {
-    this.getHomeBanner()
-    this.getHomeArticleList()
+    this.onRefreshData()
     //组件绑定 page 生命周期 测试
-    this.lifecycleOwner?.addObserver(HMLifecycleState.onHidden,this.onHidden)
-    this.lifecycleOwner?.addObserver(HMLifecycleState.onShown,this.onShow)
-  }
-  aboutToDisappear(): void {
-    this.lifecycleOwner?.removeObserver(HMLifecycleState.onHidden,this.onHidden)
-    this.lifecycleOwner?.removeObserver(HMLifecycleState.onShown,this.onShow)
+    this.lifecycleOwner?.addObserver(HMLifecycleState.onHidden, this.onHidden)
+    this.lifecycleOwner?.addObserver(HMLifecycleState.onShown, this.onShow)
   }
 
-  onShow(){
+  aboutToDisappear(): void {
+    this.lifecycleOwner?.removeObserver(HMLifecycleState.onHidden, this.onHidden)
+    this.lifecycleOwner?.removeObserver(HMLifecycleState.onShown, this.onShow)
+  }
+
+  onShow() {
     LogUtil.debug("HomeComp onShow")
   }
 
-  onHidden(){
+  onHidden() {
     LogUtil.debug("HomeComp onHidden")
   }
 
@@ -96,7 +96,7 @@ export struct HomeComp {
             .textAlign(TextAlign.Center)
             .borderRadius(10)
             .backgroundColor(0xFFFFFF)
-            .padding({left:10,right:10})
+            .padding({ left: 10, right: 10 })
         }.margin({ left: 8, right: 8 })
       })
     }.width('100%')
@@ -105,13 +105,13 @@ export struct HomeComp {
     .edgeEffect(EdgeEffect.Spring) // 加上回弹效果更流畅
   }
 
-  private async onRefreshData() {
+  private onRefreshData() {
     this.page = 0
     this.getHomeArticleList()
     this.getHomeBanner()
   }
 
-  private async onLoadData() {
+  private onLoadData() {
     if (!this.hasNextPage) {
       ToastUtil.showShort("没有更多数据了！")
       this.controller.loadError()
@@ -121,7 +121,7 @@ export struct HomeComp {
     this.getHomeArticleList()
   }
 
-  private async getHomeArticleList() {
+  private getHomeArticleList() {
     LogUtil.debug('HomeCont Child getHomeArticleList');
     HomeApi.getHomeList(this.page).then((homeArticleList: HomeListArticleResult) => {
       LogUtil.debug("HomeCont getHomeArticleList:" + JSON.stringify(homeArticleList))
@@ -139,10 +139,11 @@ export struct HomeComp {
     })
   }
 
-  private async getHomeBanner() {
+  private getHomeBanner() {
     HomeApi.homeBannerLst().then((listBanner: BannerResult[]) => {
       LogUtil.debug("HomeCont getHomeBanner:" + JSON.stringify(listBanner))
       this.listBanner = listBanner
+      this.bannerData.setData(listBanner)
     })
   }
 
