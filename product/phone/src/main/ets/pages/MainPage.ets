@@ -62,7 +62,7 @@ export struct MainPage {
         TabContent() {
           Column() {
             HomeComp()
-          }.width('100%').height('100%').backgroundColor('#00CB87').justifyContent(FlexAlign.Center)
+          }.width('100%').height('100%').backgroundColor($r('app.color.common_color_grey_d2')).justifyContent(FlexAlign.Center)
         }.tabBar(this.tabBuilder('首页', 0, $r('app.media.phone_tab_main'), $r('app.media.phone_tab_select_main')))
 
         TabContent() {

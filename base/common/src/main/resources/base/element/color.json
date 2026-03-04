@@ -23,6 +23,10 @@
     {
       "name": "common_color_grey_d2",
       "value": "#D2D2D2"
+    },
+    {
+      "name": "common_color_black_1c",
+      "value": "#1c1c1c"
     }
   ]
 }

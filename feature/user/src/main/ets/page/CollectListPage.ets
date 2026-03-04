@@ -84,7 +84,7 @@ export struct CollectListPage {
     }.width('100%').height('100%').backgroundColor($r('app.color.common_color_grey_d2'))
   }
 
-  private async onRefreshData() {
+  private  onRefreshData() {
     this.viewModel.page = 0
     this.viewModel.collectArticleList2()
     // this.viewModel.collectArticleList(this.page, (success, hasMore) => {
@@ -92,7 +92,7 @@ export struct CollectListPage {
     // })
   }
 
-  private async onLoadData() {
+  private  onLoadData() {
     if (!this.viewModel.hasMore) {
       ToastUtil.showShort("没有更多数据了！")
       this.controller.loadError()

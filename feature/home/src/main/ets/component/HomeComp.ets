@@ -33,6 +33,14 @@ export struct HomeComp {
   private hasNextPage: boolean = false
   private lifecycleOwner = HMRouterMgr.getCurrentLifecycleOwner();
 
+  @Styles
+  listItemStyle(){
+    .margin({ left: 8, right: 8 })
+    .borderRadius(10)
+    .backgroundColor(0xFFFFFF)
+    .padding(10)
+  }
+
   // 组件生命周期
   aboutToAppear() {
     this.onRefreshData()
@@ -87,22 +95,60 @@ export struct HomeComp {
         this.swiperBuilder()
       }
 
-      Repeat<HomeListArticleResultDatas>(this.listArticle).each((ri: RepeatItem<HomeListArticleResultDatas>) => {
+      Repeat<HomeListArticleResultDatas>(this.listArticle)
+        .each((ri: RepeatItem<HomeListArticleResultDatas>) => {
+          ListItem() {
+            this.listItemView(ri.item)
+          }
+        }).templateId((item: HomeListArticleResultDatas, index: number): string => {
+        return index % 2 == 0 ? 'A' : ''
+      }).template('A', (ri: RepeatItem<HomeListArticleResultDatas>) => {
         ListItem() {
-          Text(ri.item.title)
-            .width('100%')
-            .height(100)
-            .fontSize(16)
-            .textAlign(TextAlign.Center)
-            .borderRadius(10)
-            .backgroundColor(0xFFFFFF)
-            .padding({ left: 10, right: 10 })
-        }.margin({ left: 8, right: 8 })
+          this.listItemAView(ri.item)
+        }
       })
-    }.width('100%')
+    }
+    .width('100%')
+    .alignListItem(ListItemAlign.Center) //交叉轴方向的布局方式 对齐方式
     .height('100%') // 这里的 100% 会自动扣除父容器 Tabs 占用的底部高度
     .layoutWeight(1) // 确保 List 占据剩余所有空间
     .edgeEffect(EdgeEffect.Spring) // 加上回弹效果更流畅
+  }
+
+  @Builder
+  listItemAView(itemData: HomeListArticleResultDatas) {
+    Column() {
+      // 1. 顶部：作者和日期
+      Row() {
+        Text(itemData.shareUser ? itemData.shareUser : itemData.author)
+          .fontColor($r('app.color.common_color_grey_d2'))
+          .fontSize(13)
+        Blank() // 自动填满中间，将日期挤到右边
+        Text(itemData.niceShareDate).fontColor($r('app.color.common_color_grey_d2')).fontSize(13)
+      }.width('100%')
+
+      // 2. 中间：标题
+      Text(itemData.title)
+        .fontColor($r('app.color.common_color_black_1c'))
+        .fontSize(18)
+        .width('100%')
+        .margin({ top: 13 })
+        .maxLines(2) // 建议限制行数，防止标题过长撑爆布局
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
+    }
+    .listItemStyle()
+  }
+
+  @Builder
+  listItemView(itemData: HomeListArticleResultDatas) {
+    Column() {
+      Text(itemData.title)
+        .width('100%')
+        .fontSize(16)
+        .textAlign(TextAlign.Center)
+    }.listItemStyle()
+    .height(100)
+    .justifyContent(FlexAlign.Center)
   }
 
   private onRefreshData() {
