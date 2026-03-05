@@ -6,7 +6,6 @@ import { MainLifeCycle } from "../lifecycle/MainLifeCycle";
 
 @HMRouter({ pageUrl: ProductPhonePath.MAIN, lifecycle: MainLifeCycle.lifeCycleName })
 @ComponentV2
-  // @Preview
 export struct MainPage {
   @Local selectedIndex: number = 0;
   private controller: TabsController = new TabsController();
@@ -20,6 +19,14 @@ export struct MainPage {
       return lifecycle as MainLifeCycle;
     }
     return undefined;
+  }
+
+  onPageShow(): void {
+    LogUtil.debug("MainPage onPageShow")
+  }
+
+  onPageHide(): void {
+    LogUtil.debug("MainPage onPageHide")
   }
 
   @Computed

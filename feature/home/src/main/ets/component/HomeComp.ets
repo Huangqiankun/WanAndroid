@@ -41,6 +41,13 @@ export struct HomeComp {
     .padding(10)
   }
 
+  onPageShow(): void {
+    LogUtil.debug("HomeComp onPageShow")
+  }
+  onPageHide(): void {
+    LogUtil.debug("HomeComp onPageHide")
+  }
+
   // 组件生命周期
   aboutToAppear() {
     this.onRefreshData()

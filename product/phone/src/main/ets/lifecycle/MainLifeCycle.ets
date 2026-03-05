@@ -1,5 +1,5 @@
 import { HMLifecycle, HMLifecycleContext, HMRouterMgr, IHMLifecycle } from "@hadss/hmrouter";
-import { Any, LogUtil } from "common";
+import { Any, FeatureHomePath, LogUtil, UserStorageUtil } from "common";
 
 @ObservedV2
 @HMLifecycle({ lifecycleName: MainLifeCycle.lifeCycleName })
@@ -7,6 +7,9 @@ export class MainLifeCycle implements IHMLifecycle {
   static readonly lifeCycleName="MainLifeCycle"
   onPrepare(ctx: HMLifecycleContext): void {
     LogUtil.debug("MainLifeCycle onPrepare")
+    // if (!UserStorageUtil.isLogin()) {
+    //   HMRouterMgr.replace({ pageUrl: FeatureHomePath.LOGIN, param: { "from": "NetWork" } });
+    // }
   }
 
   @Trace isRefreshing: boolean = false;

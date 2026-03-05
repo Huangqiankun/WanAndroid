@@ -84,15 +84,15 @@ export struct CollectListPage {
     }.width('100%').height('100%').backgroundColor($r('app.color.common_color_grey_d2'))
   }
 
-  private  onRefreshData() {
+  private onRefreshData() {
     this.viewModel.page = 0
     this.viewModel.collectArticleList2()
-    // this.viewModel.collectArticleList(this.page, (success, hasMore) => {
+    // this.viewModel.collectArticleList( (success, hasMore) => {
     //   this.stopRefreshOrLoadAnim(success, hasMore)
     // })
   }
 
-  private  onLoadData() {
+  private onLoadData() {
     if (!this.viewModel.hasMore) {
       ToastUtil.showShort("没有更多数据了！")
       this.controller.loadError()
