@@ -1,6 +1,10 @@
 export class ProductPhonePath {
-  static readonly LOADING = "Phone/SplashPage"
-  static readonly MAIN = "Phone/MainPage"
+
+}
+
+export class FeatureMainPath{
+  static readonly LOADING = "main/SplashPage"
+  static readonly MAIN = "main/MainPage"
 }
 
 export class FeatureUserPath {
@@ -12,6 +16,8 @@ export class FeatureCoursePath {
 
 export class FeatureSquarePath {
 }
+
+
 
 export class FeatureHomePath {
   static readonly HOME = "Home/HomePage"

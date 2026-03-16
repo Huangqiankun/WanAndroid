@@ -1,5 +1,5 @@
 import { HMRouter, HMRouterMgr } from "@hadss/hmrouter";
-import { FeatureHomePath, LogUtil, ProductPhonePath, ToastUtil, UserStorageUtil } from "common";
+import { FeatureHomePath, FeatureMainPath, LogUtil, ProductPhonePath, ToastUtil, UserStorageUtil } from "common";
 import { LoginResult } from "../model/ResponseResult";
 import { HomeApi } from "../net/HomeApi";
 import { JSON } from "@kit.ArkTS";
@@ -92,7 +92,7 @@ export struct LoginPage {
 
   private loginSuccess(response: LoginResult) {
     //跳转至首页
-    HMRouterMgr.replace({pageUrl: ProductPhonePath.MAIN, param: { "from": "Login" }})
+    HMRouterMgr.replace({pageUrl: FeatureMainPath.MAIN, param: { "from": "Login" }})
   }
 
   pwdLogin(inputUser: string, inputPwd: string) {

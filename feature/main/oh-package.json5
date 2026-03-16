@@ -1,17 +1,16 @@
 {
-  "name": "phone",
+  "name": "main",
   "version": "1.0.0",
   "description": "Please describe the basic information.",
-  "main": "",
+  "main": "Index.ets",
   "author": "",
-  "license": "",
+  "license": "Apache-2.0",
   "dependencies": {
     "common": "file:../../base/common",
     "home": "file:../../feature/home",
     "course": "file:../../feature/course",
     "user": "file:../../feature/user",
     "square": "file:../../feature/square",
-    "main": "file:../../feature/main",
     "@hadss/hmrouter": "@param:parameter.hmrouter_ver"
   }
 }

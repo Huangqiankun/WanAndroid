@@ -71,6 +71,10 @@
     {
       "name": "square",
       "srcPath": "./feature/square",
+    },
+    {
+      "name": "main",
+      "srcPath": "./feature/main",
     }
   ]
 }

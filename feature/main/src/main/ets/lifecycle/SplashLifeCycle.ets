@@ -1,7 +1,6 @@
 import { HMLifecycle, HMLifecycleContext, HMRouterMgr, IHMLifecycle } from "@hadss/hmrouter";
-import { FeatureHomePath, LogUtil, ProductPhonePath, UserInfoResult, UserStorageUtil } from "common";
-import { PhoneApi } from "../net/PhoneApi";
-
+import { FeatureHomePath, FeatureMainPath, LogUtil, ProductPhonePath, UserInfoResult, UserStorageUtil } from "common";
+import { UserApi } from "user/src/main/ets/net/UserApi";
 
 @HMLifecycle({ lifecycleName: SplashLifeCycle.lifeCycleName })
 export class SplashLifeCycle implements IHMLifecycle {
@@ -39,7 +38,7 @@ export class SplashLifeCycle implements IHMLifecycle {
     try {
       // // 这里的请求会自动会走配置好的 axios 拦截器
       // // 接口校验通过：说明没失效，跳转到首页
-      PhoneApi.getUserInfo().then((userInfoResult: UserInfoResult) => {
+      UserApi.getUserInfo().then((userInfoResult: UserInfoResult) => {
         LogUtil.debug("checkLoginStatus->getUserInfo-> " + JSON.stringify(userInfoResult))
         this.jumpMain()
       })
@@ -50,6 +49,6 @@ export class SplashLifeCycle implements IHMLifecycle {
   }
 
   private jumpMain() {
-    HMRouterMgr.replace({ pageUrl: ProductPhonePath.MAIN, param: { "from": "Loading" } })
+    HMRouterMgr.replace({ pageUrl: FeatureMainPath.MAIN, param: { "from": "Loading" } })
   }
 }

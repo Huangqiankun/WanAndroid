@@ -1,10 +1,10 @@
 import { HMRouter, HMRouterMgr, IHMLifecycle } from "@hadss/hmrouter";
-import { LogUtil, ProductPhonePath } from "common";
+import { FeatureMainPath, LogUtil, ProductPhonePath } from "common";
 import { HomeComp } from "home";
 import { UserComp } from "user";
 import { MainLifeCycle } from "../lifecycle/MainLifeCycle";
 
-@HMRouter({ pageUrl: ProductPhonePath.MAIN, lifecycle: MainLifeCycle.lifeCycleName })
+@HMRouter({ pageUrl: FeatureMainPath.MAIN, lifecycle: MainLifeCycle.lifeCycleName })
 @ComponentV2
 export struct MainPage {
   @Local selectedIndex: number = 0;
@@ -70,25 +70,25 @@ export struct MainPage {
           Column() {
             HomeComp()
           }.width('100%').height('100%').backgroundColor($r('app.color.common_color_grey_d2')).justifyContent(FlexAlign.Center)
-        }.tabBar(this.tabBuilder('首页', 0, $r('app.media.phone_tab_main'), $r('app.media.phone_tab_select_main')))
+        }.tabBar(this.tabBuilder('首页', 0, $r('app.media.main_tab_main'), $r('app.media.main_tab_select_main')))
 
         TabContent() {
           Column() {
             Text('广场的内容')
           }.width('100%').height('100%').backgroundColor('#007DFF').justifyContent(FlexAlign.Center)
-        }.tabBar(this.tabBuilder('广场', 1, $r('app.media.phone_tab_square'), $r('app.media.phone_tab_select_square')))
+        }.tabBar(this.tabBuilder('广场', 1, $r('app.media.main_tab_square'), $r('app.media.main_tab_select_square')))
 
         TabContent() {
           Column() {
             Text('课程的内容')
           }.width('100%').height('100%').backgroundColor('#FFBF00').justifyContent(FlexAlign.Center)
-        }.tabBar(this.tabBuilder('课程', 2, $r('app.media.phone_tab_course'), $r('app.media.phone_tab_select_course')))
+        }.tabBar(this.tabBuilder('课程', 2, $r('app.media.main_tab_course'), $r('app.media.main_tab_select_course')))
 
         TabContent() {
           Column() {
             UserComp()
           }.width('100%').height('100%').backgroundColor('#E67C92').justifyContent(FlexAlign.Center)
-        }.tabBar(this.tabBuilder('我的', 3, $r('app.media.phone_tab_my'), $r('app.media.phone_tab_select_my')))
+        }.tabBar(this.tabBuilder('我的', 3, $r('app.media.main_tab_my'), $r('app.media.main_tab_select_my')))
       }
       .vertical(false)
       .barMode(BarMode.Fixed)
