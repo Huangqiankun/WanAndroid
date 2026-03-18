@@ -44,6 +44,7 @@ export struct HomeComp {
   onPageShow(): void {
     LogUtil.debug("HomeComp onPageShow")
   }
+
   onPageHide(): void {
     LogUtil.debug("HomeComp onPageHide")
   }
@@ -105,13 +106,15 @@ export struct HomeComp {
       Repeat<HomeListArticleResultDatas>(this.listArticle)
         .each((ri: RepeatItem<HomeListArticleResultDatas>) => {
           ListItem() {
-            this.listItemView(ri.item)
+            //this.listItemView(ri.item)
+            this.listItemView(ri)
           }
         }).templateId((item: HomeListArticleResultDatas, index: number): string => {
         return index % 2 == 0 ? 'A' : ''
       }).template('A', (ri: RepeatItem<HomeListArticleResultDatas>) => {
         ListItem() {
-          this.listItemAView(ri.item)
+          //this.listItemAView(ri.item)
+          this.listItemAView(ri)
         }
       })
     }
@@ -123,19 +126,19 @@ export struct HomeComp {
   }
 
   @Builder
-  listItemAView(itemData: HomeListArticleResultDatas) {
+  listItemAView(ri: RepeatItem<HomeListArticleResultDatas>) {
     Column() {
       // 1. 顶部：作者和日期
       Row() {
-        Text(itemData.shareUser ? itemData.shareUser : itemData.author)
+        Text(ri.item.shareUser ? ri.item.shareUser : ri.item.author)
           .fontColor($r('app.color.common_color_grey_d2'))
           .fontSize(13)
         Blank() // 自动填满中间，将日期挤到右边
-        Text(itemData.niceShareDate).fontColor($r('app.color.common_color_grey_d2')).fontSize(13)
+        Text(ri.item.niceShareDate).fontColor($r('app.color.common_color_grey_d2')).fontSize(13)
       }.width('100%')
 
       // 2. 中间：标题
-      Text(itemData.title)
+      Text(ri.item.title)
         .fontColor($r('app.color.common_color_black_1c'))
         .fontSize(18)
         .width('100%')
@@ -147,9 +150,9 @@ export struct HomeComp {
   }
 
   @Builder
-  listItemView(itemData: HomeListArticleResultDatas) {
+  listItemView(ri: RepeatItem<HomeListArticleResultDatas>) {
     Column() {
-      Text(itemData.title)
+      Text(ri.item.title)
         .width('100%')
         .fontSize(16)
         .textAlign(TextAlign.Center)
